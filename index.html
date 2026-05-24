@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muhammad Usman Khan — AI/ML Engineer</title>
+<meta name="description" content="Portfolio of Muhammad Usman Khan — AI/ML Engineer, Data Scientist, and Computer Science undergraduate at Iqra University." />
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#030712;--bg2:#0a0f1e;--bg3:#0d1428;
+  --surface:#0f172a;--surface2:#1e293b;--surface3:#162032;
+  --border:#1e3a5f;--border2:#2d4a70;
+  --cyan:#00d4ff;--cyan2:#0ea5e9;--cyan3:#38bdf8;
+  --green:#00ff88;--green2:#10b981;
+  --purple:#a855f7;--purple2:#7c3aed;
+  --text:#f0f9ff;--text2:#94a3b8;--text3:#64748b;
+  --font-display:'Syne',sans-serif;
+  --font-body:'Space Grotesk',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --radius:12px;--radius-lg:20px;--radius-xl:32px;
+  --glow-cyan:0 0 40px rgba(0,212,255,0.15),0 0 80px rgba(0,212,255,0.05);
+  --glow-green:0 0 40px rgba(0,255,136,0.15),0 0 80px rgba(0,255,136,0.05);
+  --glow-purple:0 0 40px rgba(168,85,247,0.15),0 0 80px rgba(168,85,247,0.05);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);overflow-x:hidden;line-height:1.6}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px}
+::selection{background:rgba(0,212,255,0.25);color:var(--text)}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--font-body)}
+img{max-width:100%;display:block}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+
+const { useState, useEffect, useRef, useCallback } = React;
+
+/* ─── DATA ─── */
+const NAV_LINKS = ['About','Skills','Projects','Achievements','Education','Contact'];
+
+const SKILLS = [
+  {cat:'AI / Machine Learning',color:'cyan',items:['TensorFlow','Keras','Scikit-learn','CNN / Deep Learning','Computer Vision','OpenCV','ML Pipelines','Prompt Engineering']},
+  {cat:'Data Science',color:'green',items:['Pandas','NumPy','Matplotlib','Seaborn','Jupyter Notebook','Data Analysis','Data Visualization','Feature Engineering']},
+  {cat:'Programming',color:'purple',items:['Python','SQL','HTML / CSS','REST APIs','Git','Google Colab','VS Code','Bash / CLI']},
+  {cat:'Developer Tools',color:'amber',items:['GitHub','Google Colab','VS Code','Microsoft Excel','Kaggle','Streamlit','Flask (basics)','Linux']},
+];
+
+const PROJECTS = [
+  {
+    id:1,
+    title:'CIRO',
+    subtitle:'Crisis Intelligence & Response Orchestrator',
+    year:'2026',
+    cat:'AI/ML',
+    color:'cyan',
+    icon:'🌐',
+    tags:['Python','Machine Learning','REST APIs','Real-time','AI Orchestration'],
+    desc:'An AI-powered disaster-response platform engineered for emergency monitoring and intelligent response coordination. Features real-time crisis analysis with ML inference modules, external API integrations for situational awareness, and scalable backend workflows for emergency decision support.',
+    highlights:['Real-time ML inference pipeline','Multi-API situational awareness','Scalable emergency orchestration','Crisis prediction modules'],
+    github:'#',live:'#'
+  },
+  {
+    id:2,
+    title:'FaceEmotion AI',
+    subtitle:'Facial Expression Recognition System',
+    year:'2025',
+    cat:'Computer Vision',
+    color:'green',
+    icon:'👁️',
+    tags:['TensorFlow','Keras','CNN','OpenCV','Computer Vision'],
+    desc:'A real-time facial expression recognition system powered by a custom CNN architecture. Detects and classifies human emotions (happy, sad, angry, surprised) from live webcam feeds with high accuracy using deep learning and OpenCV for face detection.',
+    highlights:['Custom CNN architecture','Real-time webcam inference','Multi-emotion classification','OpenCV face detection pipeline'],
+    github:'#',live:'#'
+  },
+  {
+    id:3,
+    title:'ML Pipeline',
+    subtitle:'End-to-End Machine Learning System',
+    year:'2025',
+    cat:'Data Science',
+    color:'purple',
+    icon:'⚙️',
+    tags:['Python','Pandas','Scikit-learn','Regression','Classification','Ensemble'],
+    desc:'A production-grade 5-phase ML workflow — from raw data ingestion to model deployment. Implements advanced preprocessing, automated feature engineering, model selection with hyperparameter tuning, and comprehensive evaluation dashboards.',
+    highlights:['5-phase automated workflow','Regression & classification','Ensemble learning methods','Model evaluation dashboards'],
+    github:'#',live:'#'
+  },
+  {
+    id:4,
+    title:'Jarvis',
+    subtitle:'AI Voice Assistant',
+    year:'2025',
+    cat:'AI/ML',
+    color:'amber',
+    icon:'🎙️',
+    tags:['Python','Speech Recognition','APIs','NLP','Automation'],
+    desc:'A Python-based AI voice assistant inspired by J.A.R.V.I.S. featuring wake-word detection, natural language processing, and seamless API integrations. Supports weather lookups, web search, file management, and task automation through conversational commands.',
+    highlights:['Wake-word detection','Real-time speech recognition','Weather & web integration','Task automation engine'],
+    github:'#',live:'#'
+  },
+  {
+    id:5,
+    title:'Vortex Vengeance',
+    subtitle:'Award-Winning Game — Techwiz 5',
+    year:'2024–2025',
+    cat:'Game Dev',
+    color:'pink',
+    icon:'🎮',
+    tags:['Game Development','Competition','Techwiz 5','Aptech Vision'],
+    desc:'A competitive game developed for international technology competitions, earning 1st Place at Vision (Aptech) and 2nd Worldwide at Techwiz 5 — a global school technology competition with thousands of participants across 40+ countries.',
+    highlights:['🥇 1st Place — Vision (Aptech)','🥈 2nd Worldwide — Techwiz 5','40+ countries competition','Thousands of global participants'],
+    github:'#',live:'#'
+  },
+];
+
+const CERTS = [
+  {issuer:'IBM',title:'Machine Learning with Python',year:'2025',color:'cyan'},
+  {issuer:'IBM',title:'Data Analysis with Python',year:'2025',color:'cyan'},
+  {issuer:'IBM',title:'Python for Data Science and AI',year:'2025',color:'cyan'},
+  {issuer:'Microsoft',title:'Data Analysis & Visualization',year:'2025',color:'green'},
+  {issuer:'Vanderbilt University',title:'Prompt Engineering for ChatGPT',year:'2025',color:'purple'},
+];
+
+const STATS = [
+  {n:'3.64',label:'CGPA / 4.00',suffix:''},
+  {n:'5',label:'Certifications',suffix:'+'},
+  {n:'5',label:'Projects Built',suffix:'+'},
+  {n:'2',label:'Intl. Awards',suffix:''},
+];
+
+const EDUCATION = [
+  {school:'Iqra University',degree:'B.Sc. Computer Science',detail:'CGPA: 3.64 / 4.00 · Specialisation: AI, ML & Data Science',period:'2023 – 2027',location:'Karachi, Pakistan',icon:'🎓'},
+  {school:'D.J. Sindh Govt. Science College',degree:'Intermediate (Pre-Engineering)',detail:'Grade A-1',period:'2021 – 2023',location:'Karachi, Pakistan',icon:'📐'},
+  {school:'K.B.V CAA Model School 1',degree:'Matriculation (Science)',detail:'Grade A-1',period:'2019 – 2021',location:'Karachi, Pakistan',icon:'🏫'},
+];
+
+/* ─── UTILS ─── */
+function useInView(threshold=0.15){
+  const ref = useRef(null);
+  const [inView,setInView] = useState(false);
+  useEffect(()=>{
+    const obs = new IntersectionObserver(([e])=>{ if(e.isIntersecting) setInView(true); },{threshold});
+    if(ref.current) obs.observe(ref.current);
+    return ()=>obs.disconnect();
+  },[threshold]);
+  return [ref,inView];
+}
+
+function useTypewriter(words,speed=80,pause=2200){
+  const [text,setText] = useState('');
+  const [idx,setIdx] = useState(0);
+  const [del,setDel] = useState(false);
+  useEffect(()=>{
+    const word = words[idx%words.length];
+    const timeout = setTimeout(()=>{
+      if(!del){
+        if(text.length < word.length){ setText(word.slice(0,text.length+1)); }
+        else { setTimeout(()=>setDel(true),pause); }
+      } else {
+        if(text.length>0){ setText(text.slice(0,-1)); }
+        else { setDel(false); setIdx(i=>i+1); }
+      }
+    }, del ? speed/2 : speed);
+    return ()=>clearTimeout(timeout);
+  },[text,del,idx,words,speed,pause]);
+  return text;
+}
+
+const colorMap = {
+  cyan:  {bg:'rgba(0,212,255,0.08)',border:'rgba(0,212,255,0.25)',text:'#00d4ff',glow:'rgba(0,212,255,0.2)'},
+  green: {bg:'rgba(0,255,136,0.08)',border:'rgba(0,255,136,0.25)',text:'#00ff88',glow:'rgba(0,255,136,0.2)'},
+  purple:{bg:'rgba(168,85,247,0.08)',border:'rgba(168,85,247,0.25)',text:'#a855f7',glow:'rgba(168,85,247,0.2)'},
+  amber: {bg:'rgba(251,191,36,0.08)',border:'rgba(251,191,36,0.25)',text:'#fbbf24',glow:'rgba(251,191,36,0.2)'},
+  pink:  {bg:'rgba(236,72,153,0.08)',border:'rgba(236,72,153,0.25)',text:'#ec4899',glow:'rgba(236,72,153,0.2)'},
+};
+
+/* ─── ANIMATED GRID BG ─── */
+function GridBg(){
+  return (
+    <div style={{position:'fixed',inset:0,zIndex:0,pointerEvents:'none',overflow:'hidden'}}>
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(0,212,255,0.04)" strokeWidth="1"/>
+          </pattern>
+          <radialGradient id="hero-glow" cx="50%" cy="30%" r="60%">
+            <stop offset="0%" stopColor="rgba(0,212,255,0.12)"/>
+            <stop offset="60%" stopColor="rgba(0,212,255,0.03)"/>
+            <stop offset="100%" stopColor="transparent"/>
+          </radialGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)"/>
+        <rect width="100%" height="100%" fill="url(#hero-glow)"/>
+      </svg>
+      {/* Floating orbs */}
+      <div style={{position:'absolute',top:'10%',left:'5%',width:400,height:400,borderRadius:'50%',background:'radial-gradient(circle,rgba(0,212,255,0.06) 0%,transparent 70%)',animation:'float1 8s ease-in-out infinite'}}/>
+      <div style={{position:'absolute',top:'50%',right:'5%',width:300,height:300,borderRadius:'50%',background:'radial-gradient(circle,rgba(168,85,247,0.06) 0%,transparent 70%)',animation:'float2 10s ease-in-out infinite'}}/>
+      <div style={{position:'absolute',bottom:'15%',left:'30%',width:250,height:250,borderRadius:'50%',background:'radial-gradient(circle,rgba(0,255,136,0.05) 0%,transparent 70%)',animation:'float3 12s ease-in-out infinite'}}/>
+      <style>{`
+        @keyframes float1{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+        @keyframes float2{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(20px) scale(0.95)}}
+        @keyframes float3{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+        @keyframes glow-pulse{0%,100%{opacity:0.6}50%{opacity:1}}
+        @keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+        @keyframes fadeSlideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeSlideLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes countUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+        @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        @keyframes borderGlow{0%,100%{box-shadow:0 0 20px rgba(0,212,255,0.1)}50%{box-shadow:0 0 40px rgba(0,212,255,0.3)}}
+      `}</style>
+    </div>
+  );
+}
+
+/* ─── NAVBAR ─── */
+function Navbar({active}){
+  const [open,setOpen] = useState(false);
+  const [scrolled,setScrolled] = useState(false);
+  useEffect(()=>{
+    const h = ()=>setScrolled(window.scrollY>60);
+    window.addEventListener('scroll',h);
+    return ()=>window.removeEventListener('scroll',h);
+  },[]);
+  const scrollTo = (id)=>{ document.getElementById(id.toLowerCase())?.scrollIntoView({behavior:'smooth'}); setOpen(false); };
+  return (
+    <nav style={{
+      position:'fixed',top:0,left:0,right:0,zIndex:1000,
+      transition:'all 0.3s ease',
+      background: scrolled ? 'rgba(3,7,18,0.85)' : 'transparent',
+      backdropFilter: scrolled ? 'blur(20px)' : 'none',
+      borderBottom: scrolled ? '1px solid rgba(0,212,255,0.1)' : 'none',
+      padding:'0 2rem',
+    }}>
+      <div style={{maxWidth:1200,margin:'0 auto',height:64,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        {/* Logo */}
+        <div style={{display:'flex',alignItems:'center',gap:10}}>
+          <div style={{width:36,height:36,borderRadius:10,background:'linear-gradient(135deg,#00d4ff,#a855f7)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--font-mono)',fontWeight:700,fontSize:14,color:'#000'}}>UK</div>
+          <span style={{fontFamily:'var(--font-display)',fontWeight:700,fontSize:16,letterSpacing:1}}>USMAN<span style={{color:'var(--cyan)'}}>.</span></span>
+        </div>
+        {/* Desktop Links */}
+        <div style={{display:'flex',gap:4,alignItems:'center'}} className="desktop-nav">
+          {NAV_LINKS.map(l=>(
+            <button key={l} onClick={()=>scrollTo(l)} style={{
+              background:'none',border:'none',color: active===l.toLowerCase() ? 'var(--cyan)' : 'var(--text2)',
+              fontFamily:'var(--font-body)',fontSize:14,fontWeight:500,padding:'6px 14px',borderRadius:8,
+              cursor:'pointer',transition:'color 0.2s',letterSpacing:0.5,
+            }}
+            onMouseEnter={e=>e.target.style.color='var(--text)'}
+            onMouseLeave={e=>e.target.style.color= active===l.toLowerCase() ? 'var(--cyan)' : 'var(--text2)'}
+            >{l}</button>
+          ))}
+          <a href="#contact" style={{
+            marginLeft:8,padding:'8px 20px',borderRadius:8,border:'1px solid rgba(0,212,255,0.3)',
+            color:'var(--cyan)',fontFamily:'var(--font-body)',fontSize:13,fontWeight:600,
+            background:'rgba(0,212,255,0.05)',letterSpacing:0.5,
+            transition:'all 0.2s',display:'inline-block'
+          }}
+          onMouseEnter={e=>{e.target.style.background='rgba(0,212,255,0.15)';e.target.style.boxShadow='0 0 20px rgba(0,212,255,0.2)'}}
+          onMouseLeave={e=>{e.target.style.background='rgba(0,212,255,0.05)';e.target.style.boxShadow='none'}}
+          onClick={e=>{e.preventDefault();scrollTo('Contact')}}>Hire Me</a>
+        </div>
+        {/* Mobile */}
+        <button onClick={()=>setOpen(o=>!o)} style={{display:'none',background:'none',border:'none',color:'var(--text)',fontSize:22,cursor:'pointer'}} className="mobile-menu-btn">
+          {open ? '✕' : '☰'}
+        </button>
+      </div>
+      {/* Mobile drawer */}
+      {open && (
+        <div style={{background:'rgba(3,7,18,0.97)',backdropFilter:'blur(20px)',borderTop:'1px solid rgba(0,212,255,0.1)',padding:'1rem 2rem 2rem'}}>
+          {NAV_LINKS.map(l=>(
+            <button key={l} onClick={()=>scrollTo(l)} style={{
+              display:'block',width:'100%',textAlign:'left',background:'none',border:'none',
+              color:'var(--text2)',fontFamily:'var(--font-body)',fontSize:16,padding:'12px 0',
+              borderBottom:'1px solid rgba(255,255,255,0.05)',cursor:'pointer',
+            }}>{l}</button>
+          ))}
+        </div>
+      )}
+      <style>{`
+        @media(max-width:768px){
+          .desktop-nav{display:none !important}
+          .mobile-menu-btn{display:block !important}
+        }
+      `}</style>
+    </nav>
+  );
+}
+
+/* ─── HERO ─── */
+function Hero(){
+  const typed = useTypewriter(['AI/ML Engineer','Data Scientist','Python Developer','Problem Solver','Award-Winner']);
+  const scrollTo = (id)=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  return (
+    <section id="hero" style={{minHeight:'100vh',display:'flex',alignItems:'center',position:'relative',zIndex:1,padding:'0 2rem',paddingTop:80}}>
+      <div style={{maxWidth:1200,margin:'0 auto',width:'100%',display:'grid',gridTemplateColumns:'1fr auto',gap:60,alignItems:'center'}}>
+        {/* Left */}
+        <div>
+          {/* Badge */}
+          <div style={{
+            display:'inline-flex',alignItems:'center',gap:8,padding:'6px 16px',
+            borderRadius:999,border:'1px solid rgba(0,212,255,0.3)',background:'rgba(0,212,255,0.05)',
+            marginBottom:24,animation:'fadeSlideUp 0.6s ease forwards',opacity:0,animationDelay:'0.1s',
+          }}>
+            <span style={{width:7,height:7,borderRadius:'50%',background:'var(--cyan)',display:'inline-block',animation:'glow-pulse 2s ease infinite'}}/>
+            <span style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--cyan)',letterSpacing:1}}>AVAILABLE FOR INTERNSHIPS & PROJECTS</span>
+          </div>
+          {/* Name */}
+          <h1 style={{
+            fontFamily:'var(--font-display)',fontSize:'clamp(2.8rem,7vw,5.5rem)',fontWeight:800,
+            lineHeight:1.05,marginBottom:16,
+            animation:'fadeSlideUp 0.6s ease forwards',opacity:0,animationDelay:'0.2s',
+          }}>
+            Muhammad<br/>
+            <span style={{background:'linear-gradient(90deg,var(--cyan),#a855f7,#00ff88)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>Usman Khan</span>
+          </h1>
+          {/* Typewriter */}
+          <div style={{
+            fontFamily:'var(--font-mono)',fontSize:'clamp(1.1rem,3vw,1.5rem)',color:'var(--text2)',
+            marginBottom:20,minHeight:40,
+            animation:'fadeSlideUp 0.6s ease forwards',opacity:0,animationDelay:'0.3s',
+          }}>
+            <span style={{color:'var(--cyan)'}}>{'> '}</span>{typed}<span style={{borderRight:'2px solid var(--cyan)',marginLeft:2,animation:'blink 0.8s step-end infinite'}}/>
+          </div>
+          {/* Tagline */}
+          <p style={{
+            fontSize:18,color:'var(--text2)',maxWidth:560,lineHeight:1.7,marginBottom:36,
+            animation:'fadeSlideUp 0.6s ease forwards',opacity:0,animationDelay:'0.4s',
+          }}>
+            Computer Science undergraduate at Iqra University with a <strong style={{color:'var(--text)'}}>3.64 CGPA</strong>, building ML pipelines, AI systems, and award-winning software. Passionate about turning complex data into intelligent solutions.
+          </p>
+          {/* CTAs */}
+          <div style={{display:'flex',gap:12,flexWrap:'wrap',marginBottom:40,animation:'fadeSlideUp 0.6s ease forwards',opacity:0,animationDelay:'0.5s'}}>
+            <button onClick={()=>scrollTo('projects')} style={{
+              padding:'14px 28px',borderRadius:10,border:'none',
+              background:'linear-gradient(135deg,var(--cyan),#0ea5e9)',
+              color:'#000',fontWeight:700,fontSize:15,letterSpacing:0.5,
+              cursor:'pointer',transition:'all 0.2s',
+            }}
+            onMouseEnter={e=>{e.target.style.transform='translateY(-2px)';e.target.style.boxShadow='0 12px 40px rgba(0,212,255,0.35)'}}
+            onMouseLeave={e=>{e.target.style.transform='none';e.target.style.boxShadow='none'}}
+            >View Projects →</button>
+            <a href="best_cv_with_links_.pdf" download style={{
+              padding:'14px 28px',borderRadius:10,border:'1px solid rgba(0,212,255,0.3)',
+              color:'var(--cyan)',fontWeight:600,fontSize:15,letterSpacing:0.5,
+              background:'rgba(0,212,255,0.05)',transition:'all 0.2s',display:'inline-flex',alignItems:'center',gap:6,
+            }}
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(0,212,255,0.12)';e.currentTarget.style.transform='translateY(-2px)'}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(0,212,255,0.05)';e.currentTarget.style.transform='none'}}
+            >↓ Download CV</a>
+            <button onClick={()=>scrollTo('contact')} style={{
+              padding:'14px 28px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',
+              color:'var(--text2)',fontWeight:600,fontSize:15,
+              background:'transparent',transition:'all 0.2s',cursor:'pointer',
+            }}
+            onMouseEnter={e=>{e.target.style.color='var(--text)';e.target.style.borderColor='rgba(255,255,255,0.25)'}}
+            onMouseLeave={e=>{e.target.style.color='var(--text2)';e.target.style.borderColor='rgba(255,255,255,0.1)'}}
+            >Contact Me</button>
+          </div>
+          {/* Social */}
+          <div style={{display:'flex',gap:16,animation:'fadeSlideUp 0.6s ease forwards',opacity:0,animationDelay:'0.6s'}}>
+            {[
+              {label:'GitHub',href:'https://github.com/Muhammad-Osman-Khan',icon:'⌥'},
+              {label:'LinkedIn',href:'https://linkedin.com/in/muhammad-usman-khan-6004ab370',icon:'in'},
+              {label:'Email',href:'mailto:usmankhan19067@gmail.com',icon:'@'},
+            ].map(s=>(
+              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" style={{
+                display:'flex',alignItems:'center',gap:6,padding:'8px 16px',
+                borderRadius:8,border:'1px solid rgba(255,255,255,0.08)',
+                color:'var(--text3)',fontSize:13,fontWeight:500,
+                background:'rgba(255,255,255,0.02)',transition:'all 0.2s',
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.color='var(--text)';e.currentTarget.style.borderColor='rgba(255,255,255,0.2)';e.currentTarget.style.background='rgba(255,255,255,0.05)'}}
+              onMouseLeave={e=>{e.currentTarget.style.color='var(--text3)';e.currentTarget.style.borderColor='rgba(255,255,255,0.08)';e.currentTarget.style.background='rgba(255,255,255,0.02)'}}
+              >
+                <span style={{fontFamily:'var(--font-mono)',fontSize:11}}>{s.icon}</span>{s.label}
+              </a>
+            ))}
+          </div>
+        </div>
+        {/* Right — avatar card */}
+        <div style={{
+          display:'flex',flexDirection:'column',alignItems:'center',gap:20,
+          animation:'fadeSlideUp 0.8s ease forwards',opacity:0,animationDelay:'0.3s',
+        }} className="hero-avatar">
+          <div style={{
+            width:260,height:260,borderRadius:'50%',
+            background:'linear-gradient(135deg,rgba(0,212,255,0.15),rgba(168,85,247,0.15))',
+            border:'2px solid rgba(0,212,255,0.25)',
+            display:'flex',alignItems:'center',justifyContent:'center',
+            position:'relative',
+            boxShadow:'0 0 80px rgba(0,212,255,0.12)',
+          }}>
+            <div style={{
+              width:230,height:230,borderRadius:'50%',
+              background:'linear-gradient(135deg,#0d1428,#1a2540)',
+              display:'flex',alignItems:'center',justifyContent:'center',
+              flexDirection:'column',gap:4,
+            }}>
+              <div style={{fontFamily:'var(--font-display)',fontSize:72,fontWeight:800,color:'transparent',background:'linear-gradient(135deg,var(--cyan),var(--purple))',WebkitBackgroundClip:'text',backgroundClip:'text'}}>UK</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:10,color:'var(--text3)',letterSpacing:2}}>AI · ML · DEV</div>
+            </div>
+            {/* Orbit ring */}
+            <div style={{position:'absolute',inset:-20,borderRadius:'50%',border:'1px dashed rgba(0,212,255,0.15)',animation:'spin 20s linear infinite'}}/>
+            {/* Orbit dot */}
+            <div style={{position:'absolute',top:-4,left:'50%',marginLeft:-4,width:8,height:8,borderRadius:'50%',background:'var(--cyan)',boxShadow:'0 0 10px var(--cyan)',animation:'spin 20s linear infinite',transformOrigin:'130px 134px'}}/>
+          </div>
+          {/* Stats row */}
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,width:'100%',maxWidth:260}}>
+            {STATS.map(s=>(
+              <div key={s.label} style={{
+                background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',
+                borderRadius:12,padding:'12px 14px',textAlign:'center',
+              }}>
+                <div style={{fontFamily:'var(--font-display)',fontSize:22,fontWeight:800,color:'var(--cyan)'}}>{s.n}{s.suffix}</div>
+                <div style={{fontSize:11,color:'var(--text3)',marginTop:2,lineHeight:1.3}}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <style>{`
+        @media(max-width:900px){
+          .hero-avatar{display:none !important}
+          #hero > div{grid-template-columns:1fr !important}
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* ─── SECTION HEADER ─── */
+function SectionHeader({tag,title,sub}){
+  const [ref,inView] = useInView();
+  return (
+    <div ref={ref} style={{textAlign:'center',marginBottom:'4rem',opacity: inView?1:0,transform: inView?'none':'translateY(20px)',transition:'all 0.6s ease'}}>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--cyan)',letterSpacing:3,marginBottom:12,textTransform:'uppercase'}}>{tag}</div>
+      <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(2rem,5vw,3rem)',fontWeight:800,lineHeight:1.1,marginBottom:12}}>{title}</h2>
+      {sub && <p style={{fontSize:17,color:'var(--text2)',maxWidth:560,margin:'0 auto',lineHeight:1.7}}>{sub}</p>}
+    </div>
+  );
+}
+
+/* ─── ABOUT ─── */
+function About(){
+  const [ref,inView] = useInView();
+  return (
+    <section id="about" style={{padding:'8rem 2rem',position:'relative',zIndex:1}}>
+      <div style={{maxWidth:1200,margin:'0 auto'}}>
+        <SectionHeader tag="// who am i" title="About Me" sub="Driven by curiosity, built on code."/>
+        <div ref={ref} style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'center',opacity:inView?1:0,transform:inView?'none':'translateY(30px)',transition:'all 0.7s ease'}}>
+          <div>
+            <p style={{fontSize:17,color:'var(--text2)',lineHeight:1.85,marginBottom:20}}>
+              I'm a <strong style={{color:'var(--text)'}}>Computer Science undergraduate at Iqra University</strong>, Karachi, specialising in Data Science, Machine Learning, and Artificial Intelligence. With a strong academic record (CGPA 3.64/4.00), I combine theoretical rigour with real-world engineering.
+            </p>
+            <p style={{fontSize:17,color:'var(--text2)',lineHeight:1.85,marginBottom:20}}>
+              From building real-time <strong style={{color:'var(--cyan)'}}>computer vision systems</strong> to engineering <strong style={{color:'var(--green)'}}>disaster-response AI platforms</strong>, I've shipped projects across the full ML stack — data ingestion, model training, REST API integration, and deployment.
+            </p>
+            <p style={{fontSize:17,color:'var(--text2)',lineHeight:1.85}}>
+              Internationally recognised with <strong style={{color:'var(--purple)'}}>1st Place at Vision (Aptech)</strong> and <strong style={{color:'var(--purple)'}}>2nd Worldwide at Techwiz 5</strong>, I bring competitive edge and creative thinking to every build.
+            </p>
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+            {[
+              {icon:'🧠',title:'AI / ML Focus',desc:'Deep learning, CNNs, scikit-learn pipelines, and production inference systems'},
+              {icon:'📊',title:'Data Science',desc:'EDA, feature engineering, statistical modelling with Pandas, NumPy & Matplotlib'},
+              {icon:'🏆',title:'Award Winner',desc:'1st at Aptech Vision · 2nd Worldwide at Techwiz 5 global competition'},
+              {icon:'📜',title:'Certified',desc:'5 certifications from IBM, Microsoft & Vanderbilt University in 2025'},
+            ].map(c=>(
+              <div key={c.title} style={{
+                background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',
+                borderRadius:16,padding:20,transition:'all 0.3s',cursor:'default',
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.border='1px solid rgba(0,212,255,0.2)';e.currentTarget.style.background='rgba(0,212,255,0.04)'}}
+              onMouseLeave={e=>{e.currentTarget.style.border='1px solid rgba(255,255,255,0.07)';e.currentTarget.style.background='rgba(255,255,255,0.02)'}}
+              >
+                <div style={{fontSize:28,marginBottom:8}}>{c.icon}</div>
+                <div style={{fontWeight:700,fontSize:15,marginBottom:6}}>{c.title}</div>
+                <div style={{fontSize:13,color:'var(--text3)',lineHeight:1.5}}>{c.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <style>{`@media(max-width:768px){#about > div > div:last-child{grid-template-columns:1fr !important;gap:40px !important}}`}</style>
+    </section>
+  );
+}
+
+/* ─── SKILLS ─── */
+function Skills(){
+  return (
+    <section id="skills" style={{padding:'8rem 2rem',position:'relative',zIndex:1,background:'linear-gradient(180deg,transparent,rgba(0,212,255,0.02),transparent)'}}>
+      <div style={{maxWidth:1200,margin:'0 auto'}}>
+        <SectionHeader tag="// what i know" title="Skills & Tech Stack" sub="Tools and technologies I use to bring ideas to life."/>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))',gap:24}}>
+          {SKILLS.map((cat,ci)=>{
+            const [ref,inView] = useInView();
+            const c = colorMap[cat.color] || colorMap.cyan;
+            return (
+              <div ref={ref} key={cat.cat} style={{
+                background:'rgba(255,255,255,0.02)',border:`1px solid ${c.border}30`,
+                borderRadius:20,padding:28,
+                opacity:inView?1:0,transform:inView?'none':'translateY(20px)',
+                transition:`all 0.5s ease ${ci*0.1}s`,
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.border=`1px solid ${c.border}`;e.currentTarget.style.boxShadow=`0 0 40px ${c.glow}`}}
+              onMouseLeave={e=>{e.currentTarget.style.border=`1px solid ${c.border}30`;e.currentTarget.style.boxShadow='none'}}
+              >
+                <div style={{
+                  fontFamily:'var(--font-display)',fontSize:14,fontWeight:700,color:c.text,
+                  marginBottom:20,letterSpacing:1,display:'flex',alignItems:'center',gap:8,
+                }}>
+                  <div style={{width:3,height:16,borderRadius:2,background:c.text}}/>
+                  {cat.cat.toUpperCase()}
+                </div>
+                <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
+                  {cat.items.map(item=>(
+                    <span key={item} style={{
+                      padding:'5px 12px',borderRadius:999,fontSize:12,fontWeight:500,
+                      background:c.bg,border:`1px solid ${c.border}`,color:c.text,
+                      fontFamily:'var(--font-mono)',letterSpacing:0.3,
+                      transition:'all 0.2s',cursor:'default',
+                    }}
+                    onMouseEnter={e=>{e.target.style.background=`${c.border}33`}}
+                    onMouseLeave={e=>{e.target.style.background=c.bg}}
+                    >{item}</span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── PROJECT CARD ─── */
+function ProjectCard({p,delay}){
+  const [ref,inView] = useInView();
+  const [hov,setHov] = useState(false);
+  const c = colorMap[p.color] || colorMap.cyan;
+  return (
+    <div ref={ref} style={{
+      background: hov ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)',
+      border: hov ? `1px solid ${c.border}` : '1px solid rgba(255,255,255,0.07)',
+      borderRadius:20,padding:28,
+      opacity:inView?1:0,transform:inView?'none':'translateY(25px)',
+      transition:`opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s, border 0.2s, background 0.2s, box-shadow 0.2s`,
+      boxShadow: hov ? `0 0 50px ${c.glow}` : 'none',
+      cursor:'default',display:'flex',flexDirection:'column',
+    }}
+    onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}>
+      {/* Header */}
+      <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:16}}>
+        <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <div style={{
+            width:48,height:48,borderRadius:14,
+            background:c.bg,border:`1px solid ${c.border}`,
+            display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,
+          }}>{p.icon}</div>
+          <div>
+            <div style={{fontFamily:'var(--font-display)',fontWeight:700,fontSize:18,lineHeight:1.2}}>{p.title}</div>
+            <div style={{fontSize:12,color:'var(--text3)',marginTop:2}}>{p.subtitle}</div>
+          </div>
+        </div>
+        <span style={{
+          padding:'3px 10px',borderRadius:999,fontSize:11,fontWeight:500,
+          background:`${c.bg}`,color:c.text,border:`1px solid ${c.border}`,
+          fontFamily:'var(--font-mono)',flexShrink:0,
+        }}>{p.year}</span>
+      </div>
+      {/* Desc */}
+      <p style={{fontSize:14,color:'var(--text2)',lineHeight:1.7,marginBottom:16,flexGrow:1}}>{p.desc}</p>
+      {/* Highlights */}
+      <ul style={{listStyle:'none',marginBottom:16}}>
+        {p.highlights.map(h=>(
+          <li key={h} style={{fontSize:13,color:'var(--text3)',padding:'3px 0',display:'flex',alignItems:'center',gap:6}}>
+            <span style={{color:c.text,fontSize:10}}>▸</span>{h}
+          </li>
+        ))}
+      </ul>
+      {/* Tags */}
+      <div style={{display:'flex',flexWrap:'wrap',gap:6,marginBottom:20}}>
+        {p.tags.map(t=>(
+          <span key={t} style={{
+            padding:'3px 10px',borderRadius:6,fontSize:11,fontWeight:500,
+            background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.08)',
+            color:'var(--text3)',fontFamily:'var(--font-mono)',
+          }}>{t}</span>
+        ))}
+      </div>
+      {/* Btns */}
+      <div style={{display:'flex',gap:10}}>
+        <a href={p.github} style={{
+          flex:1,padding:'9px',borderRadius:9,border:`1px solid ${c.border}`,
+          color:c.text,fontSize:13,fontWeight:600,textAlign:'center',
+          background:c.bg,transition:'all 0.2s',display:'block',
+        }}
+        onMouseEnter={e=>{e.target.style.background=`${c.border}33`}}
+        onMouseLeave={e=>{e.target.style.background=c.bg}}
+        >GitHub ↗</a>
+        <a href={p.live} style={{
+          flex:1,padding:'9px',borderRadius:9,border:'1px solid rgba(255,255,255,0.08)',
+          color:'var(--text2)',fontSize:13,fontWeight:600,textAlign:'center',
+          background:'rgba(255,255,255,0.03)',transition:'all 0.2s',display:'block',
+        }}
+        onMouseEnter={e=>{e.target.style.color='var(--text)';e.target.style.borderColor='rgba(255,255,255,0.2)'}}
+        onMouseLeave={e=>{e.target.style.color='var(--text2)';e.target.style.borderColor='rgba(255,255,255,0.08)'}}
+        >Live Demo ↗</a>
+      </div>
+    </div>
+  );
+}
+
+/* ─── PROJECTS ─── */
+function Projects(){
+  const [filter,setFilter] = useState('All');
+  const cats = ['All',...[...new Set(PROJECTS.map(p=>p.cat))]];
+  const filtered = filter==='All' ? PROJECTS : PROJECTS.filter(p=>p.cat===filter);
+  return (
+    <section id="projects" style={{padding:'8rem 2rem',position:'relative',zIndex:1}}>
+      <div style={{maxWidth:1200,margin:'0 auto'}}>
+        <SectionHeader tag="// what i've built" title="Projects" sub="Real-world AI/ML systems, from data pipelines to award-winning applications."/>
+        {/* Filter */}
+        <div style={{display:'flex',gap:8,flexWrap:'wrap',justifyContent:'center',marginBottom:48}}>
+          {cats.map(c=>(
+            <button key={c} onClick={()=>setFilter(c)} style={{
+              padding:'7px 18px',borderRadius:999,fontSize:13,fontWeight:600,cursor:'pointer',
+              transition:'all 0.2s',
+              background: filter===c ? 'linear-gradient(135deg,var(--cyan),#0ea5e9)' : 'rgba(255,255,255,0.03)',
+              border: filter===c ? 'none' : '1px solid rgba(255,255,255,0.08)',
+              color: filter===c ? '#000' : 'var(--text2)',
+            }}>{c}</button>
+          ))}
+        </div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(340px,1fr))',gap:24}}>
+          {filtered.map((p,i)=><ProjectCard key={p.id} p={p} delay={i*0.08}/>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── ACHIEVEMENTS ─── */
+function Achievements(){
+  return (
+    <section id="achievements" style={{padding:'8rem 2rem',position:'relative',zIndex:1,background:'linear-gradient(180deg,transparent,rgba(168,85,247,0.02),transparent)'}}>
+      <div style={{maxWidth:1200,margin:'0 auto'}}>
+        <SectionHeader tag="// recognition" title="Achievements & Certifications" sub="International awards and professional certifications earned through competition and continuous learning."/>
+        {/* Awards */}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:20,marginBottom:60}}>
+          {[
+            {icon:'🥇',title:'1st Place — Vision (Aptech)',detail:'Competitive game development championship. First place in the prestigious Aptech Vision national technology competition.',tag:'NATIONAL AWARD',color:'amber'},
+            {icon:'🥈',title:'2nd Worldwide — Techwiz 5',detail:'Achieved 2nd place globally out of thousands of participants across 40+ countries in this international school technology competition.',tag:'GLOBAL AWARD',color:'cyan'},
+          ].map(a=>{
+            const [ref,inView] = useInView();
+            const c = colorMap[a.color];
+            return (
+              <div ref={ref} key={a.title} style={{
+                background:`linear-gradient(135deg, ${c.bg}, rgba(255,255,255,0.01))`,
+                border:`1px solid ${c.border}`,borderRadius:20,padding:32,
+                opacity:inView?1:0,transform:inView?'none':'translateX(-20px)',
+                transition:'all 0.6s ease',
+              }}>
+                <div style={{fontSize:48,marginBottom:12}}>{a.icon}</div>
+                <div style={{fontFamily:'var(--font-mono)',fontSize:11,color:c.text,letterSpacing:2,marginBottom:10}}>{a.tag}</div>
+                <div style={{fontFamily:'var(--font-display)',fontSize:20,fontWeight:700,marginBottom:10}}>{a.title}</div>
+                <p style={{fontSize:14,color:'var(--text2)',lineHeight:1.65}}>{a.detail}</p>
+              </div>
+            );
+          })}
+        </div>
+        {/* Certs grid */}
+        <div style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--text3)',letterSpacing:2,textTransform:'uppercase',marginBottom:24,textAlign:'center'}}>Certifications</div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:16}}>
+          {CERTS.map((cert,i)=>{
+            const [ref,inView] = useInView();
+            const c = colorMap[cert.color] || colorMap.cyan;
+            return (
+              <div ref={ref} key={cert.title} style={{
+                background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',
+                borderRadius:14,padding:20,
+                opacity:inView?1:0,transform:inView?'none':'translateY(15px)',
+                transition:`all 0.4s ease ${i*0.07}s`,
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.border=`1px solid ${c.border}`;e.currentTarget.style.background=c.bg}}
+              onMouseLeave={e=>{e.currentTarget.style.border='1px solid rgba(255,255,255,0.07)';e.currentTarget.style.background='rgba(255,255,255,0.02)'}}
+              >
+                <div style={{fontFamily:'var(--font-mono)',fontSize:11,color:c.text,marginBottom:8,letterSpacing:1}}>{cert.issuer.toUpperCase()}</div>
+                <div style={{fontWeight:600,fontSize:14,lineHeight:1.4,marginBottom:8}}>{cert.title}</div>
+                <div style={{fontSize:12,color:'var(--text3)'}}>{cert.year}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── LEADERSHIP ─── */
+function Leadership(){
+  const [ref,inView] = useInView();
+  return (
+    <section id="experience" style={{padding:'4rem 2rem 8rem',position:'relative',zIndex:1}}>
+      <div style={{maxWidth:1200,margin:'0 auto'}}>
+        <SectionHeader tag="// community" title="Leadership & Community" sub="Beyond code — teaching, creating, and giving back."/>
+        <div ref={ref} style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,opacity:inView?1:0,transform:inView?'none':'translateY(20px)',transition:'all 0.6s ease'}}>
+          {[
+            {icon:'📐',title:'Mathematics & Chemistry Tutor',org:'Private Tuition, Karachi',period:'2023 – Present',desc:'Teaching Grade 9–10 students through personalised study plans, improving academic performance and building strong examination preparation strategies.',tags:['Mentoring','Education','Mathematics','Chemistry']},
+            {icon:'📱',title:'Content Creator',org:'Pegham-e-Hidayat · Instagram',period:'2024 – Present',desc:'Creating Islamic educational short-form video content for community engagement. Handling the full production cycle: scripting, editing, publishing, and audience interaction for an educational platform.',tags:['Content Creation','Video Editing','Community','Education']},
+          ].map(l=>(
+            <div key={l.title} style={{
+              background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',
+              borderRadius:20,padding:28,transition:'all 0.3s',
+            }}
+            onMouseEnter={e=>{e.currentTarget.style.border='1px solid rgba(0,255,136,0.25)';e.currentTarget.style.background='rgba(0,255,136,0.03)'}}
+            onMouseLeave={e=>{e.currentTarget.style.border='1px solid rgba(255,255,255,0.07)';e.currentTarget.style.background='rgba(255,255,255,0.02)'}}
+            >
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:14}}>
+                <div style={{fontSize:32}}>{l.icon}</div>
+                <span style={{fontFamily:'var(--font-mono)',fontSize:11,color:'var(--text3)',border:'1px solid rgba(255,255,255,0.07)',padding:'4px 10px',borderRadius:6}}>{l.period}</span>
+              </div>
+              <div style={{fontFamily:'var(--font-display)',fontWeight:700,fontSize:17,marginBottom:4}}>{l.title}</div>
+              <div style={{fontSize:13,color:'var(--green)',marginBottom:12}}>{l.org}</div>
+              <p style={{fontSize:14,color:'var(--text2)',lineHeight:1.65,marginBottom:16}}>{l.desc}</p>
+              <div style={{display:'flex',flexWrap:'wrap',gap:6}}>
+                {l.tags.map(t=>(
+                  <span key={t} style={{padding:'3px 10px',borderRadius:6,fontSize:11,background:'rgba(0,255,136,0.06)',border:'1px solid rgba(0,255,136,0.15)',color:'var(--green)',fontFamily:'var(--font-mono)'}}>{t}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <style>{`@media(max-width:640px){#experience > div > div:last-child{grid-template-columns:1fr !important}}`}</style>
+    </section>
+  );
+}
+
+/* ─── EDUCATION ─── */
+function Education(){
+  return (
+    <section id="education" style={{padding:'8rem 2rem',position:'relative',zIndex:1,background:'linear-gradient(180deg,transparent,rgba(0,212,255,0.015),transparent)'}}>
+      <div style={{maxWidth:900,margin:'0 auto'}}>
+        <SectionHeader tag="// academic background" title="Education" sub="A foundation built on science, engineering, and continuous growth."/>
+        <div style={{position:'relative'}}>
+          {/* Timeline line */}
+          <div style={{position:'absolute',left:28,top:0,bottom:0,width:1,background:'linear-gradient(180deg,var(--cyan),rgba(0,212,255,0.1))'}}/>
+          <div style={{display:'flex',flexDirection:'column',gap:32}}>
+            {EDUCATION.map((e,i)=>{
+              const [ref,inView] = useInView();
+              return (
+                <div ref={ref} key={e.school} style={{
+                  display:'flex',gap:24,
+                  opacity:inView?1:0,transform:inView?'none':'translateX(-20px)',
+                  transition:`all 0.5s ease ${i*0.15}s`,
+                }}>
+                  {/* Dot */}
+                  <div style={{flexShrink:0,width:56,display:'flex',justifyContent:'center',paddingTop:4}}>
+                    <div style={{
+                      width:56,height:56,borderRadius:16,
+                      background:'linear-gradient(135deg,rgba(0,212,255,0.15),rgba(0,212,255,0.05))',
+                      border:'1px solid rgba(0,212,255,0.3)',
+                      display:'flex',alignItems:'center',justifyContent:'center',fontSize:24,
+                    }}>{e.icon}</div>
+                  </div>
+                  {/* Content */}
+                  <div style={{
+                    flex:1,background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',
+                    borderRadius:16,padding:'20px 24px',transition:'all 0.3s',
+                  }}
+                  onMouseEnter={el=>{el.currentTarget.style.border='1px solid rgba(0,212,255,0.2)';el.currentTarget.style.background='rgba(0,212,255,0.03)'}}
+                  onMouseLeave={el=>{el.currentTarget.style.border='1px solid rgba(255,255,255,0.07)';el.currentTarget.style.background='rgba(255,255,255,0.02)'}}
+                  >
+                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',flexWrap:'wrap',gap:8,marginBottom:6}}>
+                      <div style={{fontFamily:'var(--font-display)',fontWeight:700,fontSize:17}}>{e.school}</div>
+                      <span style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--cyan)',border:'1px solid rgba(0,212,255,0.2)',padding:'3px 10px',borderRadius:6}}>{e.period}</span>
+                    </div>
+                    <div style={{fontWeight:600,fontSize:15,color:'var(--cyan)',marginBottom:4}}>{e.degree}</div>
+                    <div style={{fontSize:13,color:'var(--text3)'}}>{e.detail} · {e.location}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── CONTACT ─── */
+function Contact(){
+  const [ref,inView] = useInView(0.1);
+  const [form,setForm] = useState({name:'',email:'',msg:''});
+  const [sent,setSent] = useState(false);
+  const handleSubmit = (e)=>{ e.preventDefault(); setSent(true); setTimeout(()=>setSent(false),4000); setForm({name:'',email:'',msg:''}); };
+  return (
+    <section id="contact" style={{padding:'8rem 2rem',position:'relative',zIndex:1}}>
+      <div style={{maxWidth:900,margin:'0 auto'}}>
+        <SectionHeader tag="// let's connect" title="Get In Touch" sub="Open to internships, collaborations, research projects, and building cool things together."/>
+        <div ref={ref} style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:48,opacity:inView?1:0,transform:inView?'none':'translateY(30px)',transition:'all 0.6s ease'}}>
+          {/* Info */}
+          <div>
+            <p style={{fontSize:17,color:'var(--text2)',lineHeight:1.8,marginBottom:32}}>
+              Whether you have a project in mind, want to discuss AI/ML, or are looking for a dedicated developer — my inbox is always open.
+            </p>
+            <div style={{display:'flex',flexDirection:'column',gap:16}}>
+              {[
+                {icon:'📧',label:'Email',val:'usmankhan19067@gmail.com',href:'mailto:usmankhan19067@gmail.com'},
+                {icon:'📍',label:'Location',val:'Karachi, Pakistan',href:null},
+                {icon:'🔗',label:'LinkedIn',val:'muhammad-usman-khan-6004ab370',href:'https://linkedin.com/in/muhammad-usman-khan-6004ab370'},
+                {icon:'⌥',label:'GitHub',val:'Muhammad-Osman-Khan',href:'https://github.com/Muhammad-Osman-Khan'},
+              ].map(c=>(
+                <div key={c.label} style={{display:'flex',gap:14,alignItems:'center'}}>
+                  <div style={{width:42,height:42,borderRadius:12,background:'rgba(0,212,255,0.08)',border:'1px solid rgba(0,212,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,flexShrink:0}}>{c.icon}</div>
+                  <div>
+                    <div style={{fontSize:12,color:'var(--text3)',marginBottom:2}}>{c.label}</div>
+                    {c.href
+                      ? <a href={c.href} target="_blank" rel="noreferrer" style={{fontSize:14,color:'var(--cyan)',transition:'color 0.2s'}}>{c.val}</a>
+                      : <div style={{fontSize:14,color:'var(--text2)'}}>{c.val}</div>
+                    }
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Form */}
+          <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:16}}>
+            {[
+              {id:'name',label:'Your Name',placeholder:'Muhammad Ali',type:'text'},
+              {id:'email',label:'Email Address',placeholder:'you@example.com',type:'email'},
+            ].map(f=>(
+              <div key={f.id}>
+                <label style={{fontSize:13,color:'var(--text3)',display:'block',marginBottom:6,fontFamily:'var(--font-mono)'}}>{f.label}</label>
+                <input type={f.type} required placeholder={f.placeholder}
+                  value={form[f.id]} onChange={e=>setForm(p=>({...p,[f.id]:e.target.value}))}
+                  style={{width:'100%',padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.04)',color:'var(--text)',fontFamily:'var(--font-body)',fontSize:14,outline:'none',transition:'border 0.2s'}}
+                  onFocus={e=>{e.target.style.border='1px solid rgba(0,212,255,0.4)'}}
+                  onBlur={e=>{e.target.style.border='1px solid rgba(255,255,255,0.1)'}}
+                />
+              </div>
+            ))}
+            <div>
+              <label style={{fontSize:13,color:'var(--text3)',display:'block',marginBottom:6,fontFamily:'var(--font-mono)'}}>Message</label>
+              <textarea required placeholder="Tell me about your project..." rows={5}
+                value={form.msg} onChange={e=>setForm(p=>({...p,msg:e.target.value}))}
+                style={{width:'100%',padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.04)',color:'var(--text)',fontFamily:'var(--font-body)',fontSize:14,outline:'none',resize:'vertical',transition:'border 0.2s'}}
+                onFocus={e=>{e.target.style.border='1px solid rgba(0,212,255,0.4)'}}
+                onBlur={e=>{e.target.style.border='1px solid rgba(255,255,255,0.1)'}}
+              />
+            </div>
+            <button type="submit" style={{
+              padding:'14px',borderRadius:10,border:'none',
+              background: sent ? 'linear-gradient(135deg,var(--green),#059669)' : 'linear-gradient(135deg,var(--cyan),#0ea5e9)',
+              color:'#000',fontWeight:700,fontSize:15,cursor:'pointer',
+              transition:'all 0.3s',letterSpacing:0.5,
+            }}
+            onMouseEnter={e=>{e.target.style.transform='translateY(-1px)';e.target.style.boxShadow='0 8px 30px rgba(0,212,255,0.3)'}}
+            onMouseLeave={e=>{e.target.style.transform='none';e.target.style.boxShadow='none'}}
+            >{sent ? '✓ Message Sent!' : 'Send Message →'}</button>
+          </form>
+        </div>
+      </div>
+      <style>{`@media(max-width:640px){#contact > div > div:last-child{grid-template-columns:1fr !important}}`}</style>
+    </section>
+  );
+}
+
+/* ─── FOOTER ─── */
+function Footer(){
+  return (
+    <footer style={{borderTop:'1px solid rgba(255,255,255,0.06)',padding:'48px 2rem',position:'relative',zIndex:1,textAlign:'center'}}>
+      <div style={{maxWidth:1200,margin:'0 auto'}}>
+        <div style={{fontFamily:'var(--font-display)',fontSize:24,fontWeight:800,marginBottom:8}}>
+          MUK<span style={{color:'var(--cyan)'}}>.</span>
+        </div>
+        <p style={{fontSize:14,color:'var(--text3)',marginBottom:24}}>Muhammad Usman Khan · AI/ML Engineer · Karachi, Pakistan</p>
+        <div style={{display:'flex',justifyContent:'center',gap:16,flexWrap:'wrap',marginBottom:24}}>
+          {[{l:'GitHub',h:'https://github.com/Muhammad-Osman-Khan'},{l:'LinkedIn',h:'https://linkedin.com/in/muhammad-usman-khan-6004ab370'},{l:'Email',h:'mailto:usmankhan19067@gmail.com'}].map(s=>(
+            <a key={s.l} href={s.h} target="_blank" rel="noreferrer" style={{fontSize:13,color:'var(--text3)',transition:'color 0.2s',padding:'4px 8px'}}
+            onMouseEnter={e=>e.target.style.color='var(--cyan)'}
+            onMouseLeave={e=>e.target.style.color='var(--text3)'}
+            >{s.l}</a>
+          ))}
+        </div>
+        <div style={{fontSize:12,color:'var(--text3)',fontFamily:'var(--font-mono)'}}>
+          Designed & Built by Muhammad Usman Khan · {new Date().getFullYear()}
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ─── LOADING SCREEN ─── */
+function Loader({done}){
+  return (
+    <div style={{
+      position:'fixed',inset:0,zIndex:9999,background:'var(--bg)',
+      display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',
+      transition:'opacity 0.5s ease, transform 0.5s ease',
+      opacity: done ? 0 : 1,
+      transform: done ? 'scale(1.05)' : 'none',
+      pointerEvents: done ? 'none' : 'auto',
+    }}>
+      <div style={{fontFamily:'var(--font-display)',fontSize:48,fontWeight:800,color:'transparent',background:'linear-gradient(90deg,var(--cyan),var(--purple))',WebkitBackgroundClip:'text',backgroundClip:'text',animation:'glow-pulse 1.5s ease infinite',marginBottom:24}}>
+        UK
+      </div>
+      <div style={{width:200,height:2,background:'rgba(255,255,255,0.06)',borderRadius:999,overflow:'hidden'}}>
+        <div style={{height:'100%',background:'linear-gradient(90deg,var(--cyan),var(--purple))',borderRadius:999,width:done?'100%':'60%',transition:'width 0.5s ease'}}/>
+      </div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--text3)',marginTop:16,letterSpacing:2}}>LOADING PORTFOLIO...</div>
+    </div>
+  );
+}
+
+/* ─── APP ─── */
+function App(){
+  const [loaded,setLoaded] = useState(false);
+  const [active,setActive] = useState('hero');
+  useEffect(()=>{
+    const t = setTimeout(()=>setLoaded(true),1400);
+    return ()=>clearTimeout(t);
+  },[]);
+  useEffect(()=>{
+    const h = ()=>{
+      const secs = ['hero','about','skills','projects','achievements','education','contact'];
+      for(const id of [...secs].reverse()){
+        const el = document.getElementById(id);
+        if(el && window.scrollY >= el.offsetTop - 200){ setActive(id); break; }
+      }
+    };
+    window.addEventListener('scroll',h);
+    return ()=>window.removeEventListener('scroll',h);
+  },[]);
+  return (
+    <>
+      <Loader done={loaded}/>
+      <GridBg/>
+      <Navbar active={active}/>
+      <main>
+        <Hero/>
+        <About/>
+        <Skills/>
+        <Projects/>
+        <Achievements/>
+        <Leadership/>
+        <Education/>
+        <Contact/>
+      </main>
+      <Footer/>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
