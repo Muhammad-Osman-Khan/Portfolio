@@ -46,7 +46,7 @@ img{max-width:100%;display:block}
 const { useState, useEffect, useRef, useCallback } = React;
 
 /* ─── DATA ─── */
-const NAV_LINKS = ['About','Skills','Projects','Achievements','Education','Contact'];
+const NAV_LINKS = ['About','Skills','Projects','Achievements','Leadership','Education','Contact'];
 
 const SKILLS = [
   {cat:'AI / Machine Learning',color:'cyan',items:['TensorFlow','Keras','Scikit-learn','CNN / Deep Learning','Computer Vision','OpenCV','ML Pipelines','Prompt Engineering']},
@@ -314,7 +314,7 @@ function Hero(){
             marginBottom:24,animation:'fadeSlideUp 0.6s ease forwards',opacity:0,animationDelay:'0.1s',
           }}>
             <span style={{width:7,height:7,borderRadius:'50%',background:'var(--cyan)',display:'inline-block',animation:'glow-pulse 2s ease infinite'}}/>
-            <span style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--cyan)',letterSpacing:1}}>AVAILABLE FOR INTERNSHIPS & PROJECTS</span>
+            <span style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--cyan)',letterSpacing:1}}>SEEKING AI/ML INTERNSHIPS & COLLABORATIONS</span>
           </div>
           {/* Name */}
           <h1 style={{
@@ -715,7 +715,7 @@ function Achievements(){
 function Leadership(){
   const [ref,inView] = useInView();
   return (
-    <section id="experience" style={{padding:'4rem 2rem 8rem',position:'relative',zIndex:1}}>
+    <section id="leadership" style={{padding:'4rem 2rem 8rem',position:'relative',zIndex:1}}>
       <div style={{maxWidth:1200,margin:'0 auto'}}>
         <SectionHeader tag="// community" title="Leadership & Community" sub="Beyond code — teaching, creating, and giving back."/>
         <div ref={ref} style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,opacity:inView?1:0,transform:inView?'none':'translateY(20px)',transition:'all 0.6s ease'}}>
@@ -746,7 +746,7 @@ function Leadership(){
           ))}
         </div>
       </div>
-      <style>{`@media(max-width:640px){#experience > div > div:last-child{grid-template-columns:1fr !important}}`}</style>
+      <style>{`@media(max-width:640px){#leadership > div > div:last-child{grid-template-columns:1fr !important}}`}</style>
     </section>
   );
 }
@@ -757,41 +757,38 @@ function Education(){
     <section id="education" style={{padding:'8rem 2rem',position:'relative',zIndex:1,background:'linear-gradient(180deg,transparent,rgba(0,212,255,0.015),transparent)'}}>
       <div style={{maxWidth:900,margin:'0 auto'}}>
         <SectionHeader tag="// academic background" title="Education" sub="A foundation built on science, engineering, and continuous growth."/>
-        <div style={{position:'relative'}}>
-          {/* Timeline line */}
-          <div style={{position:'absolute',left:28,top:0,bottom:0,width:1,background:'linear-gradient(180deg,var(--cyan),rgba(0,212,255,0.1))'}}/>
-          <div style={{display:'flex',flexDirection:'column',gap:32}}>
+        <div style={{position:'relative',paddingLeft:80}}>
+          <div style={{position:'absolute',left:27,top:28,bottom:28,width:2,background:'linear-gradient(180deg,var(--cyan),rgba(0,212,255,0.15))',borderRadius:2}}/>
+          <div style={{display:'flex',flexDirection:'column',gap:28}}>
             {EDUCATION.map((e,i)=>{
               const [ref,inView] = useInView();
               return (
                 <div ref={ref} key={e.school} style={{
-                  display:'flex',gap:24,
+                  position:'relative',
                   opacity:inView?1:0,transform:inView?'none':'translateX(-20px)',
                   transition:`all 0.5s ease ${i*0.15}s`,
                 }}>
-                  {/* Dot */}
-                  <div style={{flexShrink:0,width:56,display:'flex',justifyContent:'center',paddingTop:4}}>
-                    <div style={{
-                      width:56,height:56,borderRadius:16,
-                      background:'linear-gradient(135deg,rgba(0,212,255,0.15),rgba(0,212,255,0.05))',
-                      border:'1px solid rgba(0,212,255,0.3)',
-                      display:'flex',alignItems:'center',justifyContent:'center',fontSize:24,
-                    }}>{e.icon}</div>
-                  </div>
-                  {/* Content */}
                   <div style={{
-                    flex:1,background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',
+                    position:'absolute',left:-80,top:12,
+                    width:56,height:56,borderRadius:16,
+                    background:'linear-gradient(135deg,rgba(0,212,255,0.18),rgba(0,212,255,0.05))',
+                    border:'2px solid rgba(0,212,255,0.35)',
+                    display:'flex',alignItems:'center',justifyContent:'center',fontSize:24,
+                    boxShadow:'0 0 20px rgba(0,212,255,0.12)',
+                  }}>{e.icon}</div>
+                  <div style={{
+                    background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.07)',
                     borderRadius:16,padding:'20px 24px',transition:'all 0.3s',
                   }}
-                  onMouseEnter={el=>{el.currentTarget.style.border='1px solid rgba(0,212,255,0.2)';el.currentTarget.style.background='rgba(0,212,255,0.03)'}}
-                  onMouseLeave={el=>{el.currentTarget.style.border='1px solid rgba(255,255,255,0.07)';el.currentTarget.style.background='rgba(255,255,255,0.02)'}}
+                  onMouseEnter={el=>{el.currentTarget.style.border='1px solid rgba(0,212,255,0.25)';el.currentTarget.style.background='rgba(0,212,255,0.03)';el.currentTarget.style.boxShadow='0 0 30px rgba(0,212,255,0.08)'}}
+                  onMouseLeave={el=>{el.currentTarget.style.border='1px solid rgba(255,255,255,0.07)';el.currentTarget.style.background='rgba(255,255,255,0.02)';el.currentTarget.style.boxShadow='none'}}
                   >
                     <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',flexWrap:'wrap',gap:8,marginBottom:6}}>
                       <div style={{fontFamily:'var(--font-display)',fontWeight:700,fontSize:17}}>{e.school}</div>
-                      <span style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--cyan)',border:'1px solid rgba(0,212,255,0.2)',padding:'3px 10px',borderRadius:6}}>{e.period}</span>
+                      <span style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--cyan)',border:'1px solid rgba(0,212,255,0.2)',padding:'3px 10px',borderRadius:6,background:'rgba(0,212,255,0.05)'}}>{e.period}</span>
                     </div>
-                    <div style={{fontWeight:600,fontSize:15,color:'var(--cyan)',marginBottom:4}}>{e.degree}</div>
-                    <div style={{fontSize:13,color:'var(--text3)'}}>{e.detail} · {e.location}</div>
+                    <div style={{fontWeight:600,fontSize:15,color:'var(--cyan)',marginBottom:6}}>{e.degree}</div>
+                    <div style={{fontSize:13,color:'var(--text3)',lineHeight:1.5}}>{e.detail} · {e.location}</div>
                   </div>
                 </div>
               );
